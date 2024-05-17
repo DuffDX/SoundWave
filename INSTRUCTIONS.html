@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundWaveApp Setup and User Guide</title>
+</head>
+<body>
+
+<h1>SoundWaveApp Setup and User Guide</h1>
+
+<hr>
+
+<h2>Table of Contents</h2>
+<ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#project-structure">Project Structure</a></li>
+    <li><a href="#setup-instructions">Setup Instructions</a></li>
+    <li><a href="#running-the-application">Running the Application</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+
+<hr>
+
+<h2 id="introduction">Introduction</h2>
+<p>SoundWaveApp is a proof-of-concept application built using Python for the backend and React Native for the frontend. The app is designed to work on iOS devices and uses the device camera to scan for a pattern based on a soundwave.</p>
+
+<hr>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you begin, ensure you have the following installed:</p>
+<ul>
+    <li><a href="https://nodejs.org/">Node.js</a> (v14 or later)</li>
+    <li><a href="https://www.npmjs.com/">npm</a> (v6 or later)</li>
+    <li><a href="https://www.python.org/">Python</a> (v3.8 or later)</li>
+    <li><a href="https://www.docker.com/">Docker</a></li>
+    <li><a href="https://cocoapods.org/">CocoaPods</a> (for iOS dependencies)</li>
+    <li><a href="https://developer.apple.com/xcode/">Xcode</a> (for iOS development)</li>
+</ul>
+
+<hr>
+
+<h2 id="project-structure">Project Structure</h2>
+<pre>
+SoundWave/
+├── SoundWaveApp/
+│   ├── App.js
+│   ├── ios/
+│   ├── android/
+│   ├── node_modules/
+│   ├── package.json
+│   └── ...
+├── app.py
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+└── .gitignore
+</pre>
+
+<hr>
+
+<h2 id="setup-instructions">Setup Instructions</h2>
+
+<h3>1. Clone the Repository</h3>
+<pre>
+<code>
+git clone &lt;repository-url&gt;
+cd SoundWave
+</code>
+</pre>
+
+<h3>2. Set Up the Backend</h3>
+<ol>
+    <li>
+        <p><strong>Create and activate a virtual environment:</strong></p>
+        <pre>
+<code>
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+</code>
+        </pre>
+    </li>
+    <li>
+        <p><strong>Install Python dependencies:</strong></p>
+        <pre>
+<code>
+pip install -r requirements.txt
+</code>
+        </pre>
+    </li>
+    <li>
+        <p><strong>Build and run the Docker container:</strong></p>
+        <pre>
+<code>
+docker-compose up --build
+</code>
+        </pre>
+    </li>
+</ol>
+
+<h3>3. Set Up the Frontend</h3>
+<ol>
+    <li>
+        <p><strong>Navigate to the React Native project directory:</strong></p>
+        <pre>
+<code>
+cd SoundWaveApp
+</code>
+        </pre>
+    </li>
+    <li>
+        <p><strong>Install npm dependencies:</strong></p>
+        <pre>
+<code>
+npm install
+</code>
+        </pre>
+    </li>
+    <li>
+        <p><strong>Install iOS dependencies:</strong></p>
+        <pre>
+<code>
+cd ios
+pod install
+cd ..
+</code>
+        </pre>
+    </li>
+</ol>
+
+<hr>
+
+<h2 id="running-the-application">Running the Application</h2>
+
+<h3>1. Start the Backend</h3>
+<p>Ensure your Docker container is running:
+
+    <pre>
+    <code>
+    docker-compose up
+    </code>
+    </pre>
+    
+    <h3>2. Start the Frontend</h3>
+    <p>Run the React Native app on iOS:</p>
+    <pre>
+    <code>
+    npx react-native run-ios
+    </code>
+    </pre>
+    
+    <hr>
+    
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    
+    <h3>Common Issues and Solutions</h3>
+    
+    <h4>1. CocoaPods Installation Issues</h4>
+    <p>If you encounter issues with CocoaPods, ensure you have the latest version installed:</p>
+    <pre>
+    <code>
+    sudo gem install cocoapods
+    cd ios
+    pod install --repo-update
+    </code>
+    </pre>
+    
+    <h4>2. Build Errors Related to Architectures</h4>
+    <p>Ensure your Xcode build settings are correctly configured:</p>
+    <ul>
+        <li><strong>Architectures</strong>: <code>$(ARCHS_STANDARD)</code></li>
+        <li><strong>Excluded Architectures</strong>: <code>arm64</code> for <code>Any iOS Simulator SDK</code></li>
+    </ul>
+    
+    <h4>3. Derived Data Issues</h4>
+    <p>If you encounter build errors related to derived data, clean the derived data folder:</p>
+    <ol>
+        <li>Open Xcode.</li>
+        <li>Go to <code>Xcode</code> > <code>Preferences</code> > <code>Locations</code>.</li>
+        <li>Click on the arrow next to <code>Derived Data</code> to open the folder in Finder.</li>
+        <li>Delete the <code>DerivedData</code> folder.</li>
+    </ol>
+    
+    <h4>4. Flipper Issues</h4>
+    <p>If you encounter issues related to Flipper, try disabling it:</p>
+    <ol>
+        <li>Edit <code>Podfile</code>:</li>
+        <pre>
+    <code>
+    # Uncomment the next line to disable Flipper
+    # use_flipper!({ 'Flipper' => '0.75.1' })
+    </code>
+        </pre>
+        <li>Reinstall pods:</li>
+        <pre>
+    <code>
+    cd ios
+    pod install
+    cd ..
+    </code>
+        </pre>
+    </ol>
+    
+    <h4>5. General Clean and Rebuild</h4>
+    <p>If you encounter persistent issues, try cleaning and rebuilding the project:</p>
+    <ol>
+        <li><strong>Clean the build folder:</strong></li>
+        <pre>
+    <code>
+    cd ios
+    xcodebuild clean
+    cd ..
+    </code>
+        </pre>
+        <li><strong>Rebuild the project:</strong></li>
+        <pre>
+    <code>
+    npx react-native run-ios
+    </code>
+        </pre>
+    </ol>
+    
+    </body>
+    </html>
